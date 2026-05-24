@@ -20,6 +20,21 @@ function getDaysUntil(dateStr: string): number {
   return Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 }
 
+function getGoogleCalUrl(event: Event): string {
+  const start = event.event_date.replace(/-/g, "");
+  const nextDay = new Date(event.event_date + "T00:00:00");
+  nextDay.setDate(nextDay.getDate() + 1);
+  const end = nextDay.toISOString().split("T")[0].replace(/-/g, "");
+  const p = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.title,
+    dates: `${start}/${end}`,
+    location: `${event.venue}, ${event.district}, Kerala`,
+    details: event.registration_url ?? `https://eventundo.in/events/${event.id}`,
+  });
+  return `https://calendar.google.com/calendar/render?${p.toString()}`;
+}
+
 export default function EventCard({ event }: { event: Event }) {
   const daysUntil = getDaysUntil(event.event_date);
   const isToday    = daysUntil === 0;
@@ -32,7 +47,7 @@ export default function EventCard({ event }: { event: Event }) {
 
   return (
     <article
-      className="rounded-2xl p-6 flex flex-col gap-4 border transition-all hover:shadow-md"
+      className="rounded-xl p-4 flex flex-col gap-2.5 border transition-all hover:shadow-md"
       style={{ background: "var(--bg-card)", borderColor: "var(--border)" }}
     >
       {/* Top: badges + icon actions */}
@@ -67,8 +82,13 @@ export default function EventCard({ event }: { event: Event }) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 shrink-0">
-          <ShareButton eventId={event.id} title={event.title} compact />
+        <div className="flex items-center gap-0.5 shrink-0">
+          <ShareButton
+            eventId={event.id}
+            title={event.title}
+            compact
+            shareUrl={event.registration_url ?? undefined}
+          />
           <a href={`https://wa.me/?text=${whatsappText}`} target="_blank" rel="noopener noreferrer"
             title="Share on WhatsApp"
             className="p-2 rounded-lg transition-opacity hover:opacity-60"
@@ -82,14 +102,14 @@ export default function EventCard({ event }: { event: Event }) {
 
       {/* Title */}
       <Link href={`/events/${event.id}`} className="group">
-        <h2 className="font-bold text-lg leading-snug group-hover:underline decoration-1 underline-offset-2"
+        <h2 className="font-bold text-base leading-snug group-hover:underline decoration-1 underline-offset-2"
           style={{ color: "var(--text)" }}>
           {event.title}
         </h2>
       </Link>
 
       {/* Meta */}
-      <div className="flex flex-col gap-2 text-sm" style={{ color: "var(--text-muted)" }}>
+      <div className="flex flex-col gap-1.5 text-sm" style={{ color: "var(--text-muted)" }}>
         <div className="flex items-center gap-2.5">
           <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"
             style={{ color: "var(--accent)" }}>
@@ -119,30 +139,44 @@ export default function EventCard({ event }: { event: Event }) {
       <div className="border-t" style={{ borderColor: "var(--border)" }} />
 
       {/* Actions */}
-      <div className="flex flex-col gap-2.5 mt-auto">
+      <div className="flex flex-col gap-2 mt-auto">
+
+        {/* Row 1: Register — full width */}
         {event.registration_url && (
           <a href={event.registration_url} target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 text-sm font-semibold px-4 py-3 rounded-xl min-h-[48px] text-white transition-opacity hover:opacity-90"
+            className="flex items-center justify-center gap-1.5 text-sm font-semibold px-3 py-2.5 rounded-xl min-h-[44px] text-white transition-opacity hover:opacity-90"
             style={{ background: "var(--accent)" }}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
             Register / More Info
           </a>
         )}
-        <div className="flex gap-2">
-          {event.maps_url && (
+
+        {/* Row 2: Maps (½) + Add to Calendar (½) */}
+        <div className="grid grid-cols-2 gap-2">
+          {event.maps_url ? (
             <a href={event.maps_url} target="_blank" rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 text-sm font-medium px-3 py-2.5 rounded-xl min-h-[44px] border transition-colors hover:bg-[var(--bg-subtle)]"
+              className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2.5 rounded-xl min-h-[44px] border transition-colors hover:bg-[var(--bg-subtle)]"
               style={{ background: "var(--bg-card)", color: "var(--text-muted)", borderColor: "var(--border)" }}>
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--accent)" }}>
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--accent)" }}>
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
               </svg>
               Maps
             </a>
-          )}
-          <ShareButton eventId={event.id} title={event.title} />
+          ) : <div />}
+
+          <a href={getGoogleCalUrl(event)} target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2.5 rounded-xl min-h-[44px] border transition-colors hover:bg-[var(--bg-subtle)]"
+            style={{ background: "var(--bg-card)", color: "var(--text-muted)", borderColor: "var(--border)" }}>
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            + Calendar
+          </a>
         </div>
+
       </div>
     </article>
   );

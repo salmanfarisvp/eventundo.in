@@ -25,14 +25,14 @@ export default function EventFilters() {
   );
 
   const selectClass =
-    "w-full appearance-none text-sm font-medium px-3.5 py-2.5 pr-9 rounded-xl min-h-[44px] focus:outline-none transition-colors cursor-pointer border";
+    "appearance-none text-sm font-medium px-3.5 py-2 pr-9 rounded-xl focus:outline-none transition-colors cursor-pointer border";
 
   const hasFilters = district || category;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-2">
+    <div className="flex flex-row flex-wrap gap-2 items-center">
       {/* District filter */}
-      <div className="relative flex-1">
+      <div className="relative">
         <select
           value={district}
           onChange={(e) => updateFilter("district", e.target.value)}
@@ -43,7 +43,7 @@ export default function EventFilters() {
             borderColor: district ? "var(--accent)" : "var(--border)",
           }}
         >
-          <option value="">ജില്ല — All Districts</option>
+          <option value="">ജില്ല/All Districts</option>
           {KERALA_DISTRICTS.map((d) => (
             <option key={d} value={d}>
               {d}
@@ -61,7 +61,7 @@ export default function EventFilters() {
       </div>
 
       {/* Category filter */}
-      <div className="relative flex-1">
+      <div className="relative">
         <select
           value={category}
           onChange={(e) => updateFilter("category", e.target.value)}
@@ -72,7 +72,7 @@ export default function EventFilters() {
             borderColor: category ? "var(--accent)" : "var(--border)",
           }}
         >
-          <option value="">വിഭാഗം — All Categories</option>
+          <option value="">വിഭാഗം/All Categories</option>
           {EVENT_CATEGORIES.map((c) => (
             <option key={c} value={c}>
               {c}

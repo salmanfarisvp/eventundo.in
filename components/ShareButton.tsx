@@ -7,25 +7,48 @@ interface ShareButtonProps {
   title: string;
   eventId: string;
   compact?: boolean;
+  shareUrl?: string; // if provided, share this URL instead of the event page
 }
 
-export default function ShareButton({ title, eventId, compact = false }: ShareButtonProps) {
+export default function ShareButton({ title, eventId, compact = false, shareUrl }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    const url = `${window.location.origin}/events/${eventId}`;
+    const url = shareUrl ?? `${window.location.origin}/events/${eventId}`;
 
+    // Native share sheet (mobile)
     if (navigator.share) {
       try {
         await navigator.share({ title, url, text: `Check out this event: ${title}` });
         return;
       } catch {
-        // User cancelled or share failed — fall through to clipboard
+        // cancelled — fall through
       }
     }
 
+    // Modern clipboard API (requires HTTPS / localhost)
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        toast.success("Link copied!");
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      } catch {
+        // fall through to execCommand
+      }
+    }
+
+    // Fallback: works on HTTP / local IP as well
     try {
-      await navigator.clipboard.writeText(url);
+      const el = document.createElement("textarea");
+      el.value = url;
+      el.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
       setCopied(true);
       toast.success("Link copied!");
       setTimeout(() => setCopied(false), 2000);
