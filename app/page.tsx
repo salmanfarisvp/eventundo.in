@@ -65,7 +65,7 @@ async function EventFeed({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {(events as Event[]).map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
@@ -80,7 +80,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg)" }}>
       <Header />
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8 flex flex-col gap-6">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8 flex flex-col gap-6">
         {/* Hero */}
         <div className="pt-2">
           <h1
