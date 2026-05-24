@@ -1,46 +1,141 @@
 @import "tailwindcss";
 
-/* Enable class-based dark mode for Tailwind v4 */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme */
+/* ── Light theme ───────────────────────────────────────────── */
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f9fafb;
-  --bg-card: #ffffff;
-  --border: #e5e7eb;
-  --border-subtle: #f3f4f6;
-  --text: #111827;
-  --text-muted: #6b7280;
-  --text-faint: #9ca3af;
-  --accent: #059669;
+  --bg:           #fffef5;
+  --bg-subtle:    #f5f4e8;
+  --bg-card:      #ffffff;
+  --border:       #000000;
+  --border-soft:  #e5e7eb;
+  --text:         #0a0a0a;
+  --text-muted:   #4b5563;
+  --text-faint:   #9ca3af;
+  --accent:       #059669;
   --accent-hover: #047857;
-  --accent-soft: #d1fae5;
-  --accent-text: #065f46;
+  --accent-fg:    #ffffff;
+  --accent-soft:  #d1fae5;
+  --accent-text:  #065f46;
+  --shadow:       4px 4px 0px #000000;
+  --shadow-sm:    3px 3px 0px #000000;
+  --shadow-xs:    2px 2px 0px #000000;
 }
 
-/* Dark theme */
+/* ── Dark theme ────────────────────────────────────────────── */
 .dark {
-  --bg: #0d0d0d;
-  --bg-subtle: #161616;
-  --bg-card: #1a1a1a;
-  --border: #2a2a2a;
-  --border-subtle: #222222;
-  --text: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-faint: #6b7280;
-  --accent: #10b981;
+  --bg:           #141414;
+  --bg-subtle:    #1e1e1e;
+  --bg-card:      #1a1a1a;
+  --border:       #d4d4d4;
+  --border-soft:  #2a2a2a;
+  --text:         #f5f5f5;
+  --text-muted:   #a3a3a3;
+  --text-faint:   #525252;
+  --accent:       #10b981;
   --accent-hover: #34d399;
-  --accent-soft: #052e16;
-  --accent-text: #6ee7b7;
+  --accent-fg:    #000000;
+  --accent-soft:  #052e16;
+  --accent-text:  #6ee7b7;
+  --shadow:       4px 4px 0px #d4d4d4;
+  --shadow-sm:    3px 3px 0px #d4d4d4;
+  --shadow-xs:    2px 2px 0px #d4d4d4;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ── Neo-brutalism utility classes ─────────────────────────── */
+
+/* Cards — thick border + hard offset shadow */
+.brutal-card {
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--bg-card);
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+.brutal-card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translate(1px, 1px);
+}
+
+/* Buttons — press-down effect on hover/active */
+.brutal-btn {
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.brutal-btn:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-xs);
+}
+.brutal-btn:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+.brutal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary accent button */
+.brutal-btn-accent {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--border);
+}
+.brutal-btn-accent:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+/* Ghost button */
+.brutal-btn-ghost {
+  background: var(--bg-card);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* Danger button */
+.brutal-btn-danger {
+  background: var(--bg-card);
+  color: #dc2626;
+  border-color: var(--border);
+}
+
+/* Inputs / Selects */
+.brutal-input {
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-weight: 500;
+  outline: none;
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+  box-shadow: var(--shadow-xs);
+}
+.brutal-input:focus {
+  box-shadow: var(--shadow-sm);
+  transform: translate(-1px, -1px);
+}
+.brutal-input::placeholder {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+/* Badges */
+.brutal-badge {
+  border: 1.5px solid var(--border);
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
 }
