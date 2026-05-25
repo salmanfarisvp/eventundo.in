@@ -52,7 +52,7 @@ async function EventFeed({ district, category }: { district?: string; category?:
   }
 
   return (
-    <div className="grid gap-3 items-start" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+    <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
       {(events as Event[]).map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
@@ -85,7 +85,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg)" }}>
       <Header />
-      <main className="flex-1 w-full px-4 sm:px-6 lg:px-10 py-8 flex flex-col gap-6">
+      <main className="flex-1 w-full px-3 sm:px-6 lg:px-10 py-6 sm:py-8 flex flex-col gap-5 sm:gap-6">
 
         {/* Hero */}
         <div className="pt-2">

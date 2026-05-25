@@ -29,7 +29,7 @@ export default function LiveClock() {
       <span className="text-sm font-bold tabular-nums" style={{ color: "var(--text)" }}>
         {time}
       </span>
-      <span className="text-[11px]" style={{ color: "var(--text-faint)" }}>
+      <span className="text-[11px] hidden lg:block" style={{ color: "var(--text-faint)" }}>
         {date}
       </span>
     </div>

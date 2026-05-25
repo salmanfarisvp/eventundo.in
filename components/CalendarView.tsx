@@ -241,7 +241,7 @@ export default function CalendarView({ events }: { events: Event[] }) {
               No events scheduled on this day
             </div>
           ) : (
-            <div className="grid gap-3 items-start"
+            <div className="grid gap-3"
               style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
               {selectedEvents.map((ev) => (
                 <EventCard key={ev.id} event={ev} />

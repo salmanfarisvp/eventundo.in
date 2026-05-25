@@ -27,7 +27,7 @@ export default function Header() {
         borderColor: "var(--border)",
       }}
     >
-      <div className="w-full px-4 sm:px-6 lg:px-10 h-14 flex items-center gap-4">
+      <div className="w-full px-4 sm:px-6 lg:px-10 h-14 flex items-center gap-3 overflow-hidden">
 
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2 min-w-0 shrink-0">
@@ -44,7 +44,7 @@ export default function Header() {
         </Link>
 
         {/* Events / Calendar toggle */}
-        <div className="flex items-center gap-0.5 p-0.5 rounded-lg border"
+        <div className="flex items-center gap-0.5 p-0.5 rounded-lg border shrink-0"
           style={{ background: "var(--bg-subtle)", borderColor: "var(--border)" }}>
           <Link
             href={buildViewHref("list")}
@@ -89,16 +89,15 @@ export default function Header() {
           {!isSubmitPage && !isAdminPage && (
             <Link
               href="/submit"
-              className="flex items-center gap-1.5 text-white text-sm font-semibold px-4 py-2 rounded-full min-h-[34px] transition-colors"
+              className="flex items-center gap-1.5 text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-full min-h-[34px] transition-colors"
               style={{ background: "var(--accent)" }}
               onMouseEnter={(e) => (e.currentTarget.style.background = "var(--accent-hover)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "var(--accent)")}
             >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
               </svg>
               <span className="hidden sm:inline">Suggest an Event</span>
-              <span className="sm:hidden">Suggest</span>
             </Link>
           )}
         </div>

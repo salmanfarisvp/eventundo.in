@@ -52,7 +52,7 @@ async function ArchiveFeed({ district, category }: { district?: string; category
   }
 
   return (
-    <div className="grid gap-3 items-start" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+    <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
       {(events as Event[]).map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
