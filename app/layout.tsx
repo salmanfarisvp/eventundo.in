@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: " 📢 eventundo.in — ഇവന്റ് ഉണ്ടോ?",
+  title: " eventundo.in — ഇവന്റ് ഉണ്ടോ?",
   description:
     "കേരളത്തിലെ ഇവന്റുകൾ ഒരൊറ്റ പേജിൽ — Discover local events across Kerala.",
   keywords: "Kerala events, local events Kerala, festivals Kerala, eventundo, ഇവന്റ്",

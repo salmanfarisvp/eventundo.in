@@ -43,7 +43,7 @@ export default function EventFilters() {
             borderColor: district ? "var(--accent)" : "var(--border)",
           }}
         >
-          <option value="">ജില്ല/All Districts</option>
+          <option value="">ജില്ല / All Districts</option>
           {KERALA_DISTRICTS.map((d) => (
             <option key={d} value={d}>
               {d}
@@ -72,7 +72,7 @@ export default function EventFilters() {
             borderColor: category ? "var(--accent)" : "var(--border)",
           }}
         >
-          <option value="">വിഭാഗം/All Categories</option>
+          <option value="">വിഭാഗം / All Categories</option>
           {EVENT_CATEGORIES.map((c) => (
             <option key={c} value={c}>
               {c}
