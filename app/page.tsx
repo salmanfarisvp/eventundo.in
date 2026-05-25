@@ -22,7 +22,7 @@ async function EventFeed({ district, category }: { district?: string; category?:
     .select("*")
     .eq("status", "approved")
     .gte("event_date", today)
-    .order("event_date", { ascending: true });
+    .order("created_at", { ascending: false });
 
   if (district) query = query.eq("district", district);
   if (category) query = query.eq("category", category);
@@ -52,7 +52,7 @@ async function EventFeed({ district, category }: { district?: string; category?:
   }
 
   return (
-    <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+    <div className="grid gap-3 items-start" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
       {(events as Event[]).map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
@@ -121,9 +121,17 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         )}
       </main>
 
-      <footer className="text-center text-xs py-8 border-t mt-4"
+      <footer className="relative text-xs px-4 sm:px-6 lg:px-10 py-8 border-t mt-4 text-center"
         style={{ color: "var(--text-faint)", borderColor: "var(--border)" }}>
-        © {new Date().getFullYear()} eventundo.in — കേരളത്തിന്, സ്നേഹത്തോടെ
+        <span>© {new Date().getFullYear()} eventundo.in</span>
+        <a href="/archive"
+          className="absolute right-4 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2 flex items-center gap-1 transition-colors hover:underline"
+          style={{ color: "var(--text-muted)" }}>
+          Past Events
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
       </footer>
     </div>
   );

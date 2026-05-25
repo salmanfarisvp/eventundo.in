@@ -47,7 +47,7 @@ export default function EventCard({ event }: { event: Event }) {
 
   return (
     <article
-      className="rounded-xl p-4 flex flex-col gap-2.5 border transition-all hover:shadow-md"
+      className="rounded-xl p-3.5 flex flex-col gap-2 border transition-all hover:shadow-md"
       style={{ background: "var(--bg-card)", borderColor: "var(--border)" }}
     >
       {/* Top: badges + icon actions */}
@@ -139,12 +139,12 @@ export default function EventCard({ event }: { event: Event }) {
       <div className="border-t" style={{ borderColor: "var(--border)" }} />
 
       {/* Actions */}
-      <div className="flex flex-col gap-2 mt-auto">
+      <div className="flex flex-col gap-1.5">
 
         {/* Row 1: Register — full width */}
         {event.registration_url && (
           <a href={event.registration_url} target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 text-sm font-semibold px-3 py-2.5 rounded-xl min-h-[44px] text-white transition-opacity hover:opacity-90"
+            className="flex items-center justify-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-lg text-white transition-opacity hover:opacity-90"
             style={{ background: "var(--accent)" }}>
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -157,9 +157,9 @@ export default function EventCard({ event }: { event: Event }) {
         <div className="grid grid-cols-2 gap-2">
           {event.maps_url ? (
             <a href={event.maps_url} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2.5 rounded-xl min-h-[44px] border transition-colors hover:bg-[var(--bg-subtle)]"
+              className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg border transition-colors hover:bg-[var(--bg-subtle)]"
               style={{ background: "var(--bg-card)", color: "var(--text-muted)", borderColor: "var(--border)" }}>
-              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--accent)" }}>
+              <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--accent)" }}>
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
               </svg>
               Maps
@@ -167,7 +167,7 @@ export default function EventCard({ event }: { event: Event }) {
           ) : <div />}
 
           <a href={getGoogleCalUrl(event)} target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2.5 rounded-xl min-h-[44px] border transition-colors hover:bg-[var(--bg-subtle)]"
+            className="flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg border transition-colors hover:bg-[var(--bg-subtle)]"
             style={{ background: "var(--bg-card)", color: "var(--text-muted)", borderColor: "var(--border)" }}>
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}

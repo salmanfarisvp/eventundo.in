@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { KERALA_DISTRICTS, EVENT_CATEGORIES } from "@/lib/constants";
 import type { Database } from "@/lib/types";
 import Link from "next/link";
-import ThemeToggle from "./ThemeToggle";
+import Header from "./Header";
 
 type Event = Database["public"]["Tables"]["events"]["Row"];
 
@@ -281,13 +281,8 @@ export default function AdminDashboard({ initialPending, initialApproved }: Admi
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/admin/login");
-  };
-
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--bg)" }}>
       {/* Edit modal */}
       {editingEvent && (
         <EditModal
@@ -297,33 +292,15 @@ export default function AdminDashboard({ initialPending, initialApproved }: Admi
         />
       )}
 
-      {/* Header */}
-      <header className="border-b sticky top-0 z-40"
-        style={{ background: "var(--bg-card)", borderColor: "var(--border)" }}>
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="font-black text-lg tracking-tight" style={{ color: "var(--text)" }}>
-              eventundo<span style={{ color: "var(--text-faint)" }}>.in</span>
-            </Link>
-            <span style={{ color: "var(--border)" }}>|</span>
-            <span className="text-sm font-semibold" style={{ color: "var(--text-muted)" }}>Admin</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <button onClick={handleLogout}
-              className="text-sm flex items-center gap-1.5 transition-opacity hover:opacity-70"
-              style={{ color: "var(--text-muted)" }}>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
-      <main className="max-w-3xl mx-auto px-4 py-6">
+      <main className="flex-1 w-full px-4 sm:px-6 lg:px-10 py-6 max-w-2xl mx-auto">
+        {/* Page heading */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-black tracking-tight" style={{ color: "var(--text)" }}>Admin</h1>
+          <p className="text-sm mt-0.5" style={{ color: "var(--text-muted)" }}>Manage event submissions</p>
+        </div>
+
         {/* Tabs */}
         <div className="flex gap-1 p-1 rounded-xl mb-6 w-fit" style={{ background: "var(--bg-subtle)" }}>
           {(["pending", "live"] as const).map((t) => (
@@ -388,6 +365,18 @@ export default function AdminDashboard({ initialPending, initialApproved }: Admi
           </div>
         )}
       </main>
+
+      <footer className="relative text-xs px-4 sm:px-6 lg:px-10 py-8 border-t mt-4 text-center"
+        style={{ color: "var(--text-faint)", borderColor: "var(--border)" }}>
+        © {new Date().getFullYear()} eventundo.in — കേരളത്തിന്, സ്നേഹത്തോടെ
+        <Link href="/" className="absolute right-4 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2 flex items-center gap-1 transition-colors hover:underline"
+          style={{ color: "var(--text-muted)" }}>
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Home
+        </Link>
+      </footer>
     </div>
   );
 }

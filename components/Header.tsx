@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import LiveClock from "./LiveClock";
+import AdminLogoutButton from "./AdminLogoutButton";
 
 export default function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isSubmitPage = pathname === "/submit";
-  const isCalendar = searchParams.get("view") === "calendar";
+  const isAdminPage  = pathname.startsWith("/admin");
+  const isCalendar   = searchParams.get("view") === "calendar";
 
   const buildViewHref = (v: string) => {
     const p = new URLSearchParams(searchParams.toString());
@@ -83,7 +85,8 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <LiveClock />
           <ThemeToggle />
-          {!isSubmitPage && (
+          {isAdminPage && <AdminLogoutButton />}
+          {!isSubmitPage && !isAdminPage && (
             <Link
               href="/submit"
               className="flex items-center gap-1.5 text-white text-sm font-semibold px-4 py-2 rounded-full min-h-[34px] transition-colors"
