@@ -93,7 +93,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             കേരളത്തിലെ ഇവന്റുകൾ
           </h1>
           <p className="text-base mt-1" style={{ color: "var(--text-muted)" }}>
-            ഉത്സവം, പ്രദർശനം, ടെക്, കായികം — ഒരൊറ്റ പേജിൽ
+            നിങ്ങൾക്കു സമീപമുള്ള പുതിയ ഇവന്റുകൾ കണ്ടെത്താനും പങ്കിടാനും ഒരു ലളിതമായ പ്ലാറ്റ്ഫോം.
           </p>
         </div>
 

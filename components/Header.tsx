@@ -33,7 +33,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-2 min-w-0 shrink-0">
           <div className="flex flex-col leading-none">
             <span className="text-lg font-black tracking-tight" style={{ color: "var(--text)" }}>
-              eventundo
+              📢 eventundo
               <span style={{ color: "var(--text-faint)" }}>.in</span>
             </span>
             <span className="text-[11px] font-medium tracking-wide hidden sm:block"
